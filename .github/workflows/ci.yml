@@ -1,0 +1,47 @@
+# GitHub Actions CI 工作流
+# 作用：每次提交代码时，自动检查代码质量和构建是否通过
+
+name: CI
+
+# 触发时机：每次 push 到主分支或创建 PR 时
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+    branches: [main, master]
+
+jobs:
+  # 代码检查和构建验证
+  check-and-build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. 检出代码（GitHub Actions 标准步骤）
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. 设置 Node.js 环境（使用 Node 20，与 Amplify 保持一致）
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      # 3. 安装依赖
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. 运行 ESLint 代码检查
+      - name: Run ESLint
+        run: npm run lint
+
+      # 5. 运行 TypeScript 类型检查（确保没有类型错误）
+      - name: Type check
+        run: npx tsc --noEmit
+
+      # 6. 尝试构建项目（确保可以成功构建）
+      - name: Build
+        run: npm run build
+
+      # 说明：如果上面任何一步失败，GitHub 会显示红色 ❌，提醒你修复问题
+      # 如果全部通过，显示绿色 ✅，可以放心合并代码
