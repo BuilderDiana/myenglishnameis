@@ -329,6 +329,6 @@ _为寻求有意义英文名的中文使用者而打造_
 
 ---
 
-**© 2024 Diana. All rights reserved.**
+**© 2026 Diana. All rights reserved.**
 
 </div>
