@@ -5,10 +5,13 @@ name: CI
 
 # 触发时机：每次 push 到主分支或创建 PR 时
 on:
-  push:
-    branches: [main]
   pull_request:
     branches: [main]
+    paths-ignore:
+      - "**/*.md"
+      - "README.md"
+      - "docs/**"
+
 permissions:
     contents: read
 
