@@ -8,14 +8,17 @@ function isWeChatBrowser() {
 }
 
 export default function WeChatNotice() {
-  const [show, setShow] = useState(false);
+  // 使用 useState 的初始化函数来检测微信浏览器，避免在 useEffect 中同步 setState
+  const [show, setShow] = useState(() => {
+    if (typeof window === "undefined") return false; // 服务端渲染检查
+    return isWeChatBrowser();
+  });
 
   useEffect(() => {
-    if (!isWeChatBrowser()) return;
-    setShow(true);
+    if (!show) return; // 只有在微信浏览器中才需要设置定时器
     const t = window.setTimeout(() => setShow(false), 5000);
     return () => window.clearTimeout(t);
-  }, []);
+  }, [show]);
 
   if (!show) return null;
 

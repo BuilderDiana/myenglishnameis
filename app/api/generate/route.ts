@@ -32,12 +32,12 @@ export async function POST(req: Request) {
     // 输出也做校验：保证前端永远拿到稳定结构（production 必备）
     const safe = GenerateResponseSchema.parse(result);
     return NextResponse.json(safe);
-  } catch (err: any) {
+  } catch (err: unknown) {
     return NextResponse.json(
       {
         ok: false,
         error: "Bad Request",
-        message: err?.message ?? "Invalid input",
+        message: err instanceof Error ? err.message : "Invalid input",
       },
       { status: 400 }
     );

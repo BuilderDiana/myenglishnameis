@@ -27,7 +27,9 @@ export default function Home() {
   // 表单状态（先做“够用且专业”的字段，后续可扩展：MBTI/星座/国家等）
   const [chineseName, setChineseName] = useState("");
   const [pinyin, setPinyin] = useState("");
-  const [gender, setGender] = useState<"female" | "male" | "neutral">("neutral");
+  const [gender, setGender] = useState<"female" | "male" | "neutral">(
+    "neutral"
+  );
   const [scene, setScene] = useState<"work" | "study" | "social">("social");
   const [rare, setRare] = useState(70); // 0-100
   const [cute, setCute] = useState(70); // 0-100
@@ -77,8 +79,8 @@ export default function Home() {
       sessionStorage.setItem("menei:last_payload", JSON.stringify(payload));
 
       router.push("/results");
-    } catch (e: any) {
-      setErr(e?.message ?? "Unknown error");
+    } catch (e: unknown) {
+      setErr(e instanceof Error ? e.message : "Unknown error");
     } finally {
       setLoading(false);
     }
@@ -88,7 +90,9 @@ export default function Home() {
     <main className="min-h-screen bg-white">
       <div className="mx-auto max-w-5xl px-6 py-14">
         <header className="flex items-center justify-between">
-          <div className="text-sm font-semibold tracking-tight">myenglishnameis.com</div>
+          <div className="text-sm font-semibold tracking-tight">
+            myenglishnameis.com
+          </div>
 
           <button
             type="button"
@@ -132,7 +136,10 @@ export default function Home() {
               ["Cute & friendly", "更亲和、更有记忆点"],
               ["Cultural notes", "出处、含义、昵称、发音一次讲清"],
             ].map(([title, desc]) => (
-              <div key={title} className="rounded-2xl border border-neutral-200 p-5">
+              <div
+                key={title}
+                className="rounded-2xl border border-neutral-200 p-5"
+              >
                 <div className="text-sm font-semibold">{title}</div>
                 <div className="mt-2 text-sm text-neutral-600">{desc}</div>
               </div>
@@ -146,9 +153,15 @@ export default function Home() {
             {[
               ["1) Tell us your vibe", "可爱/罕见/中性/正式等偏好 + 使用场景"],
               ["2) Generate candidates", "生成 5–10 个候选名 + 昵称 + 发音"],
-              ["3) Explain why it fits", "给出文化出处与匹配理由，可分享/可保存"],
+              [
+                "3) Explain why it fits",
+                "给出文化出处与匹配理由，可分享/可保存",
+              ],
             ].map(([title, desc]) => (
-              <div key={title} className="rounded-2xl border border-neutral-200 p-5">
+              <div
+                key={title}
+                className="rounded-2xl border border-neutral-200 p-5"
+              >
                 <div className="text-sm font-semibold">{title}</div>
                 <div className="mt-2 text-sm text-neutral-600">{desc}</div>
               </div>
@@ -159,9 +172,12 @@ export default function Home() {
         {/* 表单区：Landing 底部直接引导填写 */}
         <section ref={formRef} className="mt-16 scroll-mt-24">
           <div className="rounded-3xl border border-neutral-200 p-6 sm:p-8">
-            <h2 className="text-xl font-semibold tracking-tight">Tell us about you</h2>
+            <h2 className="text-xl font-semibold tracking-tight">
+              Tell us about you
+            </h2>
             <p className="mt-2 text-sm text-neutral-600">
-              填完直接出结果（下一页）。我们先做“罕见独特 / 可爱亲和”最核心体验。
+              填完直接出结果（下一页）。我们先做“罕见独特 /
+              可爱亲和”最核心体验。
             </p>
 
             <form onSubmit={onSubmit} className="mt-6 grid gap-4">
@@ -192,7 +208,9 @@ export default function Home() {
                   <span className="text-sm font-medium">性别倾向</span>
                   <select
                     value={gender}
-                    onChange={(e) => setGender(e.target.value as any)}
+                    onChange={(e) =>
+                      setGender(e.target.value as "female" | "male" | "neutral")
+                    }
                     className="h-11 rounded-xl border border-neutral-200 px-3 text-sm outline-none focus:border-neutral-400"
                   >
                     <option value="neutral">中性</option>
@@ -205,7 +223,9 @@ export default function Home() {
                   <span className="text-sm font-medium">使用场景</span>
                   <select
                     value={scene}
-                    onChange={(e) => setScene(e.target.value as any)}
+                    onChange={(e) =>
+                      setScene(e.target.value as "work" | "study" | "social")
+                    }
                     className="h-11 rounded-xl border border-neutral-200 px-3 text-sm outline-none focus:border-neutral-400"
                   >
                     <option value="social">社交/日常</option>

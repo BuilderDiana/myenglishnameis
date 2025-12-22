@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 type Candidate = {
   name: string;
@@ -18,23 +18,27 @@ type GenerateResponse = {
 };
 
 export default function ResultsPage() {
-  const [data, setData] = useState<GenerateResponse | null>(null);
-
-  useEffect(() => {
+  // 使用 useState 的初始化函数，只在组件首次渲染时执行（客户端）
+  // setData 虽然未使用，但保持 useState 的结构，方便未来扩展
+  const [data] = useState<GenerateResponse | null>(() => {
+    if (typeof window === "undefined") return null; // 服务端渲染检查
     const raw = sessionStorage.getItem("menei:last_result");
-    if (!raw) return;
+    if (!raw) return null;
     try {
-      setData(JSON.parse(raw));
+      return JSON.parse(raw);
     } catch {
-      setData(null);
+      return null;
     }
-  }, []);
+  });
 
   return (
     <main className="mx-auto max-w-3xl px-6 py-10">
       <div className="flex items-center justify-between gap-4">
         <h1 className="text-2xl font-semibold tracking-tight">Your results</h1>
-        <Link href="/" className="text-sm text-neutral-600 hover:text-neutral-900">
+        <Link
+          href="/"
+          className="text-sm text-neutral-600 hover:text-neutral-900"
+        >
           ← Back
         </Link>
       </div>
@@ -46,15 +50,24 @@ export default function ResultsPage() {
       ) : (
         <div className="mt-6 grid gap-3">
           {data.candidates.map((c) => (
-            <div key={c.name} className="rounded-2xl border border-neutral-200 p-4">
+            <div
+              key={c.name}
+              className="rounded-2xl border border-neutral-200 p-4"
+            >
               <div className="flex flex-wrap items-baseline gap-2">
                 <div className="text-lg font-semibold">{c.name}</div>
                 {c.pronunciation_ipa && (
-                  <div className="text-sm text-neutral-600">/{c.pronunciation_ipa}/</div>
+                  <div className="text-sm text-neutral-600">
+                    /{c.pronunciation_ipa}/
+                  </div>
                 )}
               </div>
 
-              {c.origin && <div className="mt-2 text-sm text-neutral-600">Origin: {c.origin}</div>}
+              {c.origin && (
+                <div className="mt-2 text-sm text-neutral-600">
+                  Origin: {c.origin}
+                </div>
+              )}
 
               {c.nickname?.length ? (
                 <div className="mt-2 text-sm text-neutral-600">
