@@ -118,7 +118,7 @@ MyEnglishNameIs combines AI capabilities with cultural reasoning to provide pers
 - Historical origins, semantics, and implied characteristics
 - Naturalness and explainability in real communication
 
-**Output**: Up to **10 recommended English names**, each including:
+**Output**:  **3 recommended English names**, each including:
 
 - Name meaning and cultural origin
 - Why this name fits you
@@ -146,7 +146,7 @@ MyEnglishNameIs 结合 AI 能力与文化推理，基于**个人特质与表达�
 - 历史来源、语义与隐含特征
 - 真实交流中的自然度与可解释性
 
-**输出**：最多 **10 个推荐英文名**，每个包含：
+**输出**： **3 个推荐英文名**，每个包含：
 
 - 名字含义与文化出处
 - 为什么这个名字适合你
