@@ -38,14 +38,20 @@ const MbtiEnum = z.enum([
 
 // 气质关键词枚举
 const VibeKeywordEnum = z.enum([
-  "rational", // 理性
-  "gentle", // 温和
-  "independent", // 独立
-  "creative", // 创造力
-  "warm", // 亲和
-  "restrained", // 克制
-  "elegant", // 优雅
-  "confident", // 自信
+  "rational", // 理性智识
+  "gentle", // 温润如玉
+  "independent", // 独立自由
+  "creative", // 灵感迸发
+  "warm", // 温暖亲和
+  "restrained", // 克制内敛
+  "elegant", // 优雅高贵
+  "confident", // 从容自信
+]);
+
+// 生肖枚举
+export const ChineseZodiacEnum = z.enum([
+  "rat", "ox", "tiger", "rabbit", "dragon", "snake",
+  "horse", "goat", "monkey", "rooster", "dog", "pig"
 ]);
 
 /**
@@ -54,14 +60,17 @@ const VibeKeywordEnum = z.enum([
  * 输入维度：
  * - gender（必填）：影响名字在英语文化中的使用频率与性别语境
  * - zodiac（必填）：轻量人格映射，广泛被用户理解
+ * - chinese_zodiac（可选）：生肖，增加东方文化维度
  * - mbti（可选）：高阶性格维度，适合愿意深度表达的用户
  * - vibe_keywords（必填）：核心差异化输入，反映用户希望名字传达的价值与气质
  */
 export const GenerateRequestSchema = z.object({
+  chinese_name: z.string().optional(),
   gender: z.enum(["female", "male", "neutral"]),
   zodiac: ZodiacEnum,
+  chinese_zodiac: ChineseZodiacEnum,
   mbti: MbtiEnum.optional(),
-  vibe_keywords: z.array(VibeKeywordEnum).min(1).max(3),
+  vibe_keywords: z.array(VibeKeywordEnum).min(1).max(2),
 });
 
 export type GenerateRequest = z.infer<typeof GenerateRequestSchema>;
