@@ -5,12 +5,12 @@ import {
   GenerateResponseSchema,
 } from "@/app/lib/contracts";
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 export async function POST(req: Request) {
+  // Initialize OpenAI client inside the handler for build-time safety
+  const openai = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY,
+  });
+
   try {
     const raw = await req.json();
     const input = GenerateRequestSchema.parse(raw);
